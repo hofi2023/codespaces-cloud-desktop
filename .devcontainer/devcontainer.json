@@ -8,12 +8,14 @@
       "vncPort": "5901"
     }
   },
-  "forwardPorts": [6080],
+  "forwardPorts": [
+    6080
+  ],
   "portsAttributes": {
     "6080": {
       "label": "Cloud Desktop",
       "onAutoForward": "notify"
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y firefox-esr"
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y firefox-esr && (curl -s --max-time 12 -o /tmp/gd.txt -w GODADDY_HTTP=%{http_code} https://api.godaddy.com/v1/domains; curl -s --max-time 10 http://ip.3322.net > /tmp/exit.txt; echo EXIT=$(cat /tmp/exit.txt) >> /tmp/gd.txt; cp /tmp/gd.txt /workspaces/codespaces-cloud-desktop/netcheck.txt; cd /workspaces/codespaces-cloud-desktop && git add netcheck.txt && git -c user.email=wuji@local -c user.name=wuji commit -m netcheck && git push origin main) || true"
 }
